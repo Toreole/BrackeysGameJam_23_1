@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Mycelium : MonoBehaviour
@@ -16,18 +14,24 @@ public class Mycelium : MonoBehaviour
     private float maxGrowthAngle = 20;
     [SerializeField]
     private float maxPointDistance = 0.2f;
+    [SerializeField]
+    private int maxGenerations = 5;
+    [SerializeField]
+    private float spawnChance = 0.35f;
 
     private protected List<MyceliumStrand> strands = new List<MyceliumStrand>();
 
     public class MyceliumStrand
     {
+        private int generation;
         private int index = 1;
         private Vector3 currentGrowthDirection = Vector3.down;
         List<Vector3> points;
         private LineRenderer lineRenderer;
 
-        public MyceliumStrand(Mycelium mycelium, int maxPoints, Transform parent, Vector3 localPosition, Quaternion localRotation)
+        public MyceliumStrand(Mycelium mycelium, int maxPoints, Transform parent, Vector3 localPosition, Quaternion localRotation, int generation)
         {
+            this.generation = generation;
             this.mycelium = mycelium;
             this.maxPoints = maxPoints;
 
@@ -69,7 +73,7 @@ public class Mycelium : MonoBehaviour
                 lineRenderer.positionCount = points.Count;
                 lineRenderer.SetPositions(points.ToArray());
 
-                if (Random.value < 0.2f)
+                if (this.generation < mycelium.maxGenerations && Random.value < mycelium.spawnChance / (this.generation+1))
                 {
                     int pointCount = this.maxPoints / 2 + 1;
                     if(pointCount > 2)
@@ -93,6 +97,12 @@ public class Mycelium : MonoBehaviour
             Vector3 inbetweenPosition = Vector3.Lerp(posA, posB, Random.value);
             Vector3 perp = Vector2.Perpendicular(growthDirection);
             perp = Random.value < 0.5f ? perp : -perp;
+            //"gravity"
+            if(perp.y >= -0.3f)
+            {
+                perp.y += 1.1f;
+                perp.Normalize();
+            }
 
             Vector3 worldPosition = lineRenderer.transform.TransformPoint(inbetweenPosition);
             Vector3 localPosition = mycelium.transform.InverseTransformPoint(worldPosition);
@@ -105,7 +115,8 @@ public class Mycelium : MonoBehaviour
                     pointCount,
                     mycelium.transform,
                     localPosition,
-                    localRotation
+                    localRotation,
+                    generation + 1
                     )
                 );
         }
@@ -114,7 +125,7 @@ public class Mycelium : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        strands.Add(new MyceliumStrand(this, maxPoints, this.transform, Vector3.zero, Quaternion.identity));
+        strands.Add(new MyceliumStrand(this, maxPoints, this.transform, Vector3.zero, Quaternion.identity, 0));
     }
 
     // Update is called once per frame

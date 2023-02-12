@@ -324,9 +324,17 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8696260188500073185, guid: 9785b17a1c671c94fbc74ffd47a91590, type: 3}
+      propertyPath: spawnChance
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 8696260188500073185, guid: 9785b17a1c671c94fbc74ffd47a91590, type: 3}
       propertyPath: strandPrefab
       value: 
       objectReference: {fileID: 4220736049404783455, guid: c104a85a3d61c244ba9aadec52d4b45e, type: 3}
+    - target: {fileID: 8696260188500073185, guid: 9785b17a1c671c94fbc74ffd47a91590, type: 3}
+      propertyPath: maxGenerations
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 8696260188500073199, guid: 9785b17a1c671c94fbc74ffd47a91590, type: 3}
       propertyPath: m_Name
       value: Mycelium
