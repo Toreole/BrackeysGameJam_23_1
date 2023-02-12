@@ -187,7 +187,31 @@ MonoBehaviour:
   capTransform: {fileID: 5513550490343799613}
   stemRenderer: {fileID: 5513550488296898478}
   capRenderer: {fileID: 5513550490343799612}
-  growthRate: 0.4
+  growthTime: 16
+  growthCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   maxSize: 1.2
 --- !u!1 &5513550490343799610
 GameObject:

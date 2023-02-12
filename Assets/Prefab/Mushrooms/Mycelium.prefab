@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   strandPrefab: {fileID: 4220736049404783455, guid: c104a85a3d61c244ba9aadec52d4b45e, type: 3}
   maxPoints: 20
-  growthRate: 2
+  growthRate: 1.2
   maxGrowthAngle: 20
   maxPointDistance: 0.25
   maxGenerations: 4
