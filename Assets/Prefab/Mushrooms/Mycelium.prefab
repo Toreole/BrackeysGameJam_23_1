@@ -44,8 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 327db75a4de75424985132284a6dfe7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lineRenderer: {fileID: 0}
-  maxPoints: 40
-  growthRate: 1
+  strandPrefab: {fileID: 4220736049404783455, guid: c104a85a3d61c244ba9aadec52d4b45e, type: 3}
+  maxPoints: 20
+  growthRate: 2
   maxGrowthAngle: 20
   maxPointDistance: 0.25
+  maxGenerations: 4
+  spawnChance: 0.35
