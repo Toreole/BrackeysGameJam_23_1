@@ -37,4 +37,11 @@ public class Mushroom : MonoBehaviour
         float size = maxSize * growthCurve.Evaluate(growthPercentage);
         shroomTransform.localScale = new Vector3(size, size, size);
     }
+
+    public Bounds CalculateMushroomBoundsRelativeTo(Transform space)
+    {
+        Bounds worldBounds = capRenderer.bounds;
+        Vector2 localCenter = space.InverseTransformPoint(worldBounds.center);
+        return new Bounds(localCenter, worldBounds.size);
+    }
 }
