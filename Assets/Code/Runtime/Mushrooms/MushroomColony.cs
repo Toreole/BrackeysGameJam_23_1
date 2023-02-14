@@ -6,7 +6,7 @@ using UnityEngine;
 public class MushroomColony : MonoBehaviour, ITooltip
 {
     [SerializeField]
-    private MushroomInfo mushroomInfo;
+    private MushroomInfo mushroomInfo; //TODO: inject this upon creation of the colony.
     [SerializeField]
     private GameObject mushroomPrefab;
 

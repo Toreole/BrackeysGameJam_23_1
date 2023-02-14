@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class MushroomInfo : MonoBehaviour
 {
+    [SerializeField]
     private int bioMassPoints = 0;
 
     [SerializeField]
@@ -19,6 +20,11 @@ public class MushroomInfo : MonoBehaviour
     public MyceliumSettings MyceliumSettings => myceliumSettings;
     public MushroomSettings MushroomSettings => mushroomSettings;
     public SpeciesSettings SpeciesSettings => speciesSettings;
+
+    private void Awake()
+    {
+        foreach (var x in FindObjectsOfType<MushroomGene>()) x.Init(this);
+    }
 }
 
 [Serializable]

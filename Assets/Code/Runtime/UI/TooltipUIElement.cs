@@ -84,7 +84,8 @@ public class TooltipUIElement : MonoBehaviour
             group.alpha = 1;
             return true;
         }
-        return false;
+        //return false when no ui element is hit. (anything that blocks raycasts)
+        return resultList.Count != 0;
     }
 
     private void UpdateTooltipFromWorld(Vector2 worldPosition)
