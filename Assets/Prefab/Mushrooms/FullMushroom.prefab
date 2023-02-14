@@ -110,6 +110,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9785b17a1c671c94fbc74ffd47a91590, type: 3}
+--- !u!114 &3233991034068602518 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8696260188500073185, guid: 9785b17a1c671c94fbc74ffd47a91590, type: 3}
+  m_PrefabInstance: {fileID: 6074831598209864823}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 327db75a4de75424985132284a6dfe7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &3233991034068602519 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8696260188500073184, guid: 9785b17a1c671c94fbc74ffd47a91590, type: 3}
@@ -126,8 +137,24 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mushroom
       objectReference: {fileID: 0}
+    - target: {fileID: 5513550490133047864, guid: 51afb4d91214e684b9244ef5820efb51, type: 3}
+      propertyPath: mycelium
+      value: 
+      objectReference: {fileID: 3233991034068602518}
     - target: {fileID: 5513550490133047865, guid: 51afb4d91214e684b9244ef5820efb51, type: 3}
       propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5513550490133047865, guid: 51afb4d91214e684b9244ef5820efb51, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5513550490133047865, guid: 51afb4d91214e684b9244ef5820efb51, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5513550490133047865, guid: 51afb4d91214e684b9244ef5820efb51, type: 3}
+      propertyPath: m_LocalScale.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5513550490133047865, guid: 51afb4d91214e684b9244ef5820efb51, type: 3}

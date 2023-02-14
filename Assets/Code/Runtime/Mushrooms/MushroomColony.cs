@@ -6,9 +6,10 @@ using UnityEngine;
 public class MushroomColony : MonoBehaviour, ITooltip
 {
     [SerializeField]
+    private MushroomInfo mushroomInfo;
+    [SerializeField]
     private GameObject mushroomPrefab;
 
-    [SerializeField]
     private int mushroomCount = 8;
     [SerializeField]
     private Vector2 spawnRectSize = new Vector2(5, 2);
@@ -36,13 +37,14 @@ public class MushroomColony : MonoBehaviour, ITooltip
                 percentGrowth += m.GrowthStage * percentPerMushroom;
             int growthTotal = ((int)(percentGrowth * 100f));
 
-            return $"A Colony of [MUSHROOM_NAME] Mushrooms.\n{growthTotal}% mature.";
+            return $"A Colony of {mushroomInfo.SpeciesSettings.FullName}.\n{growthTotal}% mature.";
         }
     }
 
     private void Start()
     {
         timeBetweenSpawns = 1f / spawnRate;
+        mushroomCount = mushroomInfo.SpeciesSettings.colonySize;
         percentPerMushroom = 1f / mushroomCount;
         mushrooms = new List<Mushroom>(mushroomCount);
         spawnRectExtents = 0.5f * spawnRectSize;
@@ -100,7 +102,10 @@ public class MushroomColony : MonoBehaviour, ITooltip
         Transform nT = inst.transform;
         nT.localPosition = localSpawnPoint;
 
-        mushrooms.Add(inst.GetComponentInChildren<Mushroom>());
+        var shroom = inst.GetComponentInChildren<Mushroom>();
+        shroom.Init(mushroomInfo, mushrooms.Count+1);
+
+        mushrooms.Add(shroom);
         spawnDeltaTime = 0;
     }
 

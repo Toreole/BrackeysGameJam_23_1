@@ -185,9 +185,11 @@ MonoBehaviour:
   shroomTransform: {fileID: 5513550490133047865}
   stemTransform: {fileID: 5513550488296898479}
   capTransform: {fileID: 5513550490343799613}
+  mycelium: {fileID: 0}
   stemRenderer: {fileID: 5513550488296898478}
   capRenderer: {fileID: 5513550490343799612}
-  growthTime: 16
+  stemMask: {fileID: 5513550488296898481}
+  capMask: {fileID: 5513550490343799615}
   growthCurve:
     serializedVersion: 2
     m_Curve:
@@ -212,7 +214,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  maxSize: 1.2
 --- !u!1 &5513550490343799610
 GameObject:
   m_ObjectHideFlags: 0

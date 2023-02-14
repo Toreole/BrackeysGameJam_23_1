@@ -7,29 +7,49 @@ public class Mushroom : MonoBehaviour
 {
     [SerializeField]
     private Transform shroomTransform, stemTransform, capTransform;
+    [SerializeField]
+    private Mycelium mycelium;
 
     [SerializeField]
     private SpriteRenderer stemRenderer, capRenderer;
-
     [SerializeField]
-    private float growthTime = 16f;
+    private SpriteMask stemMask, capMask;
+
     [SerializeField]
     private AnimationCurve growthCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
-    [SerializeField]
-    private float maxSize = 1.2f;
+    private float maxSize;
+    private float growthTime;
 
     private float growthPercentage = 0f;
-
     public float GrowthStage => growthPercentage;
 
-    // Start is called before the first frame update
-    void Start()
+    public void Init(MushroomInfo info, int id)
     {
-        maxSize += Random.Range(-0.3f, 0.5f);
-        stemTransform.localScale = Random.value < 0.5f? new Vector3(-1, 1, 1): Vector3.one;
+        capRenderer.sortingOrder = capMask.frontSortingOrder = id;
+        capMask.backSortingOrder = id-1;
+
+        stemRenderer.sortingOrder = stemMask.frontSortingOrder = -id;
+        stemMask.backSortingOrder = -id - 1;
+
+        stemTransform.localScale = Random.value < 0.5f ? new Vector3(-1, 1, 1) : Vector3.one;
         capTransform.localScale = Random.value < 0.5f ? new Vector3(-1, 1, 1) : Vector3.one;
-        capTransform.localScale *= Random.Range(0.85f, 1.15f);
+        capTransform.localRotation = Quaternion.AngleAxis(Random.Range(-15, 15), Vector3.forward);
+
+        var settings = info.MushroomSettings;
+
+        float variance = settings.sizeVariance;
+        capTransform.localScale *= Random.Range(1 - variance, 1 + variance);
+
+        capRenderer.color = settings.colorRange.GetColor();
+        capRenderer.sprite = settings.capTexture;
+        capMask.sprite = settings.capShape;
+
+        stemRenderer.sprite = settings.stemTexture;
+        stemMask.sprite = settings.stemShape;
+
+        maxSize = settings.maxSize + Random.value * settings.sizeVariance;
+        growthTime = settings.growTime;
     }
 
     // Update is called once per frame

@@ -45,22 +45,17 @@ public class TooltipUIElement : MonoBehaviour
         limit.x -= halfSize.x;
         limit.y -= halfSize.y;
 
-
         Vector2 anchoredMax = self.anchoredPosition + size * 0.5f;
         Vector2 anchoredMin = anchoredMax - size;
 
+        //offset from mouse
         Vector2 offset = new Vector2(halfSize.x, -halfSize.y);
         Vector2 targetPosition = self.anchoredPosition + offset;
+        //limit position to its always fully onscreen
         targetPosition.x = Mathf.Clamp(targetPosition.x, halfSize.x, limit.x);
         targetPosition.y = Mathf.Clamp(targetPosition.y, halfSize.y, limit.y);
         self.anchoredPosition = targetPosition;
-        //NOTE TO SELF: use anchoredPosition to limit position on x/y and apply offset.
-        //Vector2 size = self.rect.size;
-        //tempPos.x = Mathf.Min(limit.x, tempPos.x);
-        //tempPos.y = Mathf.Min(limit.y, tempPos.y);
-        //tempPos.x = Mathf.Max(0, tempPos.x);
-        //tempPos.y = Mathf.Max(0, tempPos.y);
-        //self.anchoredPosition = limitedAnchoredPosition;
+
         UpdateTooltipFromWorld(worldPosition);
     }
 
