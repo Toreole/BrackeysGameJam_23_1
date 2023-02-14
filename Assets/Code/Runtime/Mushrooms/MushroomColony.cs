@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
-public class MushroomColony : MonoBehaviour
+public class MushroomColony : MonoBehaviour, ITooltip
 {
     [SerializeField]
     private GameObject mushroomPrefab;
@@ -25,10 +25,25 @@ public class MushroomColony : MonoBehaviour
     private float sqrSpacing;
 
     private List<Mushroom> mushrooms;
+    private float percentPerMushroom;
+
+    public string Tooltip
+    {
+        get
+        {
+            float percentGrowth = 0f;
+            foreach (var m in mushrooms)
+                percentGrowth += m.GrowthStage * percentPerMushroom;
+            int growthTotal = ((int)(percentGrowth * 100f));
+
+            return $"A Colony of [MUSHROOM_NAME] Mushrooms.\n{growthTotal}% mature.";
+        }
+    }
 
     private void Start()
     {
         timeBetweenSpawns = 1f / spawnRate;
+        percentPerMushroom = 1f / mushroomCount;
         mushrooms = new List<Mushroom>(mushroomCount);
         spawnRectExtents = 0.5f * spawnRectSize;
         sqrSpacing = spacing * spacing;
@@ -49,7 +64,6 @@ public class MushroomColony : MonoBehaviour
 
     private void UpdateColliderBounds()
     {
-        //Bounds bounds = GetLocalBounds(boundsCollider);
         Vector3 min = Vector3.positiveInfinity, max = Vector3.negativeInfinity;
         if(mushrooms.Count == 0)
         {
@@ -74,12 +88,6 @@ public class MushroomColony : MonoBehaviour
         //bounds.min = min; bounds.max = max;
         boundsCollider.size = size;
         boundsCollider.offset = center;
-    }
-
-    private Bounds GetLocalBounds(BoxCollider2D boundsCollider)
-    {
-        var b = boundsCollider.bounds;
-        return new Bounds(transform.InverseTransformPoint(b.center), b.size);
     }
 
     private void SpawnMushroom()
