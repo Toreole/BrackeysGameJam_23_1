@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class TooltipUIElement : MonoBehaviour
 {
@@ -15,13 +17,15 @@ public class TooltipUIElement : MonoBehaviour
     private CanvasGroup group;
     [SerializeField]
     private Canvas canvas;
-
+    
+    private GraphicRaycaster graphicRaycaster;
     private RectTransform canvasTransform;
 
     void Start()
     {
         canvasTransform = canvas.transform as RectTransform;
         self ??= transform as RectTransform;
+        graphicRaycaster = canvas.GetComponent<GraphicRaycaster>();
     }
 
     Collider2D[] buffer = new Collider2D[8];
@@ -56,12 +60,35 @@ public class TooltipUIElement : MonoBehaviour
         targetPosition.y = Mathf.Clamp(targetPosition.y, halfSize.y, limit.y);
         self.anchoredPosition = targetPosition;
 
-        UpdateTooltipFromWorld(worldPosition);
+        group.alpha = 0;
+        if(!UpdateTooltipFromGUI(mousePosition))
+            UpdateTooltipFromWorld(worldPosition);
+    }
+
+    private List<RaycastResult> resultList = new List<RaycastResult>(20);
+
+    private bool UpdateTooltipFromGUI(Vector2 mousePosition)
+    {
+        resultList.Clear();
+        var pointerEvent = new PointerEventData(EventSystem.current);
+        pointerEvent.position = mousePosition;
+
+        graphicRaycaster.Raycast(pointerEvent, resultList);
+        for(int i = 0; i < resultList.Count; i++)
+        {
+            var result = resultList[i];
+            var target = result.gameObject.GetComponent<ITooltip>();
+            if (target == null)
+                continue;
+            textGUI.text = target.Tooltip;
+            group.alpha = 1;
+            return true;
+        }
+        return false;
     }
 
     private void UpdateTooltipFromWorld(Vector2 worldPosition)
     {
-        group.alpha = 0;
         int n = Physics2D.OverlapPointNonAlloc(worldPosition, buffer);
         for (int i = 0; i < n; i++)
         {

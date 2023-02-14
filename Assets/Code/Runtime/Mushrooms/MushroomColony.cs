@@ -13,7 +13,6 @@ public class MushroomColony : MonoBehaviour, ITooltip
     private int mushroomCount = 8;
     [SerializeField]
     private Vector2 spawnRectSize = new Vector2(5, 2);
-    [SerializeField]
     private float spacing = 0.37f;
     [SerializeField]
     private float spawnRate = 0.6f; //per second.
@@ -43,8 +42,10 @@ public class MushroomColony : MonoBehaviour, ITooltip
 
     private void Start()
     {
-        timeBetweenSpawns = 1f / spawnRate;
         mushroomCount = mushroomInfo.SpeciesSettings.colonySize;
+        spacing = mushroomInfo.SpeciesSettings.mushroomSpacing;
+
+        timeBetweenSpawns = 1f / spawnRate;
         percentPerMushroom = 1f / mushroomCount;
         mushrooms = new List<Mushroom>(mushroomCount);
         spawnRectExtents = 0.5f * spawnRectSize;

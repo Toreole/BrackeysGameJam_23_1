@@ -1,23 +1,29 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 /// <summary>
 /// Genes change the stats of the mushroom.
 /// </summary>
-public class MushroomGene : MonoBehaviour, ITooltip
+[RequireComponent(typeof(Image))]
+public class MushroomGene : Selectable, ITooltip, IPointerClickHandler
 {
+    [Header("Mushroom Gene")]
     [SerializeField]
     private MushroomGene parentGene;
     [SerializeField]
-    private new string name;
-    [SerializeField]
     private int cost = 1;
-
+    [SerializeField]
+    private new string name;
     [SerializeField]
     private string description;
 
+    [Header("Gene Changes")]
     [SerializeField]
-    private string overrideSpeciesPrefix, overrideSpeciesSuffix;
+    private string overrideSpeciesPrefix;
+    [SerializeField]
+    private string overrideSpeciesSuffix;
     [SerializeField]
     private string overrideSpeciesName;
     [SerializeField]
@@ -48,6 +54,11 @@ public class MushroomGene : MonoBehaviour, ITooltip
 
         Acquired = true;
         return true;
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        throw new NotImplementedException();
     }
 }
 

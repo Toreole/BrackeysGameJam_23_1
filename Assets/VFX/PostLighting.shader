@@ -50,7 +50,7 @@ Shader "Hidden/PostLighting"
                 fixed lightContribution = lightPixel.a;
                 fixed3 lightColour = lightPixel.rgb;
 
-                col.rgb = col.rgb + lightContribution * lightColour;
+                col.rgb = lerp(col.rgb, lightColour, lightContribution * 0.5f);
                 return col;
             }
             ENDCG
