@@ -26,6 +26,9 @@ public class Mushroom : MonoBehaviour
 
     public void Init(MushroomInfo info, int id)
     {
+        growthPercentage = 0;
+        shroomTransform.localScale = Vector3.zero;
+
         capRenderer.sortingOrder = capMask.frontSortingOrder = id;
         capMask.backSortingOrder = id-1;
 

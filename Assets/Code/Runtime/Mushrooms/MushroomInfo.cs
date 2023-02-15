@@ -16,10 +16,22 @@ public class MushroomInfo : MonoBehaviour
     [SerializeField]
     private SpeciesSettings speciesSettings;
 
-    public int BioMassPoints { get => bioMassPoints; internal set => bioMassPoints = value; }
+    public int BioMassPoints 
+    { 
+        get => bioMassPoints; 
+        internal set
+        {
+            if (bioMassPoints == value)
+                return;
+            OnBioMassPointsChanged?.Invoke(value);
+            bioMassPoints = value; 
+        } 
+    }
     public MyceliumSettings MyceliumSettings => myceliumSettings;
     public MushroomSettings MushroomSettings => mushroomSettings;
     public SpeciesSettings SpeciesSettings => speciesSettings;
+
+    public event Action<int> OnBioMassPointsChanged;
 
     private void Awake()
     {

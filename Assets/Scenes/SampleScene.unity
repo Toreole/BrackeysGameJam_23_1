@@ -211,6 +211,7 @@ MonoBehaviour:
   overrideSpeciesPrefix: 
   overrideSpeciesSuffix: 
   overrideSpeciesName: 
+  bonusColonySize: 0
   changeGrowTime: 0
   bonusSizeMax: 0
   overrideStemShape: {fileID: 0}
@@ -351,6 +352,7 @@ MonoBehaviour:
   overrideSpeciesPrefix: 
   overrideSpeciesSuffix: 
   overrideSpeciesName: 
+  bonusColonySize: 0
   changeGrowTime: 0
   bonusSizeMax: 0
   overrideStemShape: {fileID: 0}
@@ -1064,6 +1066,7 @@ MonoBehaviour:
   overrideSpeciesPrefix: 
   overrideSpeciesSuffix: 
   overrideSpeciesName: 
+  bonusColonySize: 0
   changeGrowTime: 0
   bonusSizeMax: 0
   overrideStemShape: {fileID: 0}
@@ -1269,7 +1272,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1376510856
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1504,6 +1507,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1760159566}
   - component: {fileID: 1760159565}
+  - component: {fileID: 1760159567}
   m_Layer: 0
   m_Name: MushroomInfo
   m_TagString: Untagged
@@ -1525,7 +1529,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bioMassPoints: 20
   mushroomSettings:
-    growTime: 20
+    growTime: 5
     maxSize: 1.2
     sizeVariance: 0.1
     colorRange:
@@ -1541,7 +1545,7 @@ MonoBehaviour:
     namePrefix: Generic
     nameSuffix: 
     name: Mushroom
-    colonySize: 20
+    colonySize: 8
     mushroomSpacing: 0.4
 --- !u!4 &1760159566
 Transform:
@@ -1558,6 +1562,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1760159567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1760159564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e904428ee0b3584d92da41768381d99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camera: {fileID: 519420031}
 --- !u!1 &1817025609
 GameObject:
   m_ObjectHideFlags: 0

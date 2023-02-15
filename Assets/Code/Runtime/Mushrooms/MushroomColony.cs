@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
-public class MushroomColony : MonoBehaviour, ITooltip
+public class MushroomColony : MonoBehaviour, ITooltip, IInteractable
 {
     [SerializeField]
     private MushroomInfo mushroomInfo; //TODO: inject this upon creation of the colony.
@@ -23,19 +23,27 @@ public class MushroomColony : MonoBehaviour, ITooltip
     private float spawnDeltaTime = 0;
     private Vector2 spawnRectExtents;
     private float sqrSpacing;
+    private int activeMushrooms = 0;
 
     private List<Mushroom> mushrooms;
     private float percentPerMushroom;
+
+    private float GrowthPercent 
+    { 
+        get 
+        {
+            float percentGrowth = 0f;
+            foreach (var m in mushrooms)
+                percentGrowth += m.GrowthStage * percentPerMushroom;
+            return percentGrowth;
+        } 
+    }
 
     public string Tooltip
     {
         get
         {
-            float percentGrowth = 0f;
-            foreach (var m in mushrooms)
-                percentGrowth += m.GrowthStage * percentPerMushroom;
-            int growthTotal = ((int)(percentGrowth * 100f));
-
+            int growthTotal = (int)(GrowthPercent * 100f);
             return $"A Colony of {mushroomInfo.SpeciesSettings.FullName}.\n{growthTotal}% mature.";
         }
     }
@@ -57,12 +65,30 @@ public class MushroomColony : MonoBehaviour, ITooltip
     void Update()
     {
         spawnDeltaTime += Time.deltaTime;
-        if(spawnDeltaTime > timeBetweenSpawns && mushrooms.Count < mushroomCount)
+        if(spawnDeltaTime > timeBetweenSpawns)
         {
-            SpawnMushroom();
+            if (mushrooms.Count < mushroomCount)
+                SpawnMushroom();
+            else
+                ReactivateMushroom();
         }
         if((Time.frameCount % 2) == 1) //only update collider bounds on odd frames.
             UpdateColliderBounds();
+    }
+
+    private void ReactivateMushroom()
+    {
+        spawnDeltaTime = 0;
+        if (activeMushrooms >= mushrooms.Count)
+            return;
+        var mush = mushrooms[activeMushrooms];
+        if (mush.enabled)
+        {
+            activeMushrooms++;
+            return;
+        }
+        mush.enabled = true;
+        activeMushrooms++;
     }
 
     private void UpdateColliderBounds()
@@ -108,6 +134,7 @@ public class MushroomColony : MonoBehaviour, ITooltip
 
         mushrooms.Add(shroom);
         spawnDeltaTime = 0;
+        activeMushrooms++;
     }
 
     private Vector2 GetRandomSpawnPoint()
@@ -131,4 +158,23 @@ public class MushroomColony : MonoBehaviour, ITooltip
         return true;
     }
 
+    public void Interact()
+    {
+        if (this.GrowthPercent < 0.99f)
+            return;
+        this.Harvest();
+    }
+
+    private void Harvest()
+    {
+        activeMushrooms = 0;
+        mushroomCount = mushroomInfo.SpeciesSettings.colonySize; //update colony size.
+        for (int i = 0; i < mushrooms.Count; i++)
+        {
+            mushrooms[i].Init(mushroomInfo, i + 1);
+            //calling init again acts like a reset.
+            mushrooms[i].enabled = false;
+        }
+        mushroomInfo.BioMassPoints += 1 + (Mathf.Max(0, mushroomCount - 8) / 2);
+    }
 }

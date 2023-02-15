@@ -29,6 +29,8 @@ public class MushroomGene : Selectable, ITooltip, IPointerClickHandler
     [SerializeField]
     private string overrideSpeciesName;
     [SerializeField]
+    private int bonusColonySize;
+    [SerializeField]
     private float changeGrowTime;
     [SerializeField]
     private float bonusSizeMax;
@@ -51,23 +53,21 @@ public class MushroomGene : Selectable, ITooltip, IPointerClickHandler
     public bool Acquired { get; private set; } = false;
     public event Action onGeneAcquired;
 
-    public string Tooltip => $"<u>{name}</u>\n{description}";
+    public string Tooltip => $"<u>{name}</u>\n{description}\nCost: {cost}";
 
     protected override void OnEnable()
     {
         base.OnEnable();
-        if(parentGene) parentGene.onGeneAcquired += OnAcquireParent;
-        if(conflictingGene) conflictingGene.onGeneAcquired += OnAcquireConflicting;
         //setting myself above the silly IDE warning of "no null propagation" 
         //because these are never destroyed, theyre either null or valid.
-        this.interactable = (parentGene?.Acquired ?? true) && (!conflictingGene?.Acquired ?? true);
+        this.interactable = (parentGene?.Acquired ?? true) && (!conflictingGene?.Acquired ?? true) && !this.Acquired;
     }
 
-    protected override void OnDisable()
+    protected override void Start()
     {
-        base.OnDisable();
-        if (parentGene) parentGene.onGeneAcquired -= OnAcquireParent;
-        if (conflictingGene) conflictingGene.onGeneAcquired -= OnAcquireConflicting;
+        base.Start();
+        if (parentGene) parentGene.onGeneAcquired += OnAcquireParent;
+        if (conflictingGene) conflictingGene.onGeneAcquired += OnAcquireConflicting;
     }
 
     private void OnAcquireParent()
@@ -89,9 +89,32 @@ public class MushroomGene : Selectable, ITooltip, IPointerClickHandler
 
         //TODO:
         //apply effects to mushroom info object.
-
+        ApplyChanges();
         Acquired = true;
+        ColorBlock cb = this.colors;
+        cb.disabledColor = Color.green;
+        this.colors = cb;
+        this.interactable = false;
         onGeneAcquired?.Invoke();
+    }
+
+    private void ApplyChanges()
+    {
+        var ms = info.MushroomSettings;
+        ms.maxSize += bonusSizeMax;
+        ms.growTime += changeGrowTime;
+        if (this.changeCapColor) ms.colorRange = this.overrideCapColor;
+        if (this.overrideCapShape) ms.capShape = this.overrideCapShape;
+        if (this.overrideCapTexture) ms.capTexture = this.overrideCapTexture;
+        if (this.overrideStemShape) ms.stemShape = this.overrideStemShape;
+        if (this.overrideStemTexture) ms.stemTexture = this.overrideStemTexture;
+
+        var ss = info.SpeciesSettings;
+        ss.colonySize += bonusColonySize;
+        if (string.IsNullOrEmpty(overrideSpeciesPrefix) == false) ss.namePrefix = overrideSpeciesPrefix;
+        if (string.IsNullOrEmpty(overrideSpeciesName) == false) ss.name = overrideSpeciesName;
+        if (string.IsNullOrEmpty(overrideSpeciesSuffix) == false) ss.nameSuffix = overrideSpeciesSuffix;
+
     }
 
     public void OnPointerClick(PointerEventData eventData)
