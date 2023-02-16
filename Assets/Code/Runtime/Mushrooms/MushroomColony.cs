@@ -150,9 +150,9 @@ public class MushroomColony : MonoBehaviour, ITooltip, IInteractable
         if(mushrooms.Count != 0)
             foreach(var m in mushrooms)
             {
-                Vector2 mp = m.transform.localPosition;
+                Vector2 mp = m.transform.parent.localPosition;
                 var sqrD = Vector2.SqrMagnitude(pos - mp);
-                if (sqrD < sqrSpacing)
+                if (sqrD <= sqrSpacing)
                     return false;
             }
         return true;
