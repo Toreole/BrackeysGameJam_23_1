@@ -51,7 +51,7 @@ public class MushroomGene : Selectable, ITooltip, IPointerClickHandler
     private MushroomInfo info;
 
     public bool Acquired { get; private set; } = false;
-    public event Action onGeneAcquired;
+    public event Action OnGeneAcquired;
 
     public string Tooltip => $"<u>{name}</u>\n{description}\nCost: {cost}";
 
@@ -66,8 +66,8 @@ public class MushroomGene : Selectable, ITooltip, IPointerClickHandler
     protected override void Start()
     {
         base.Start();
-        if (parentGene) parentGene.onGeneAcquired += OnAcquireParent;
-        if (conflictingGene) conflictingGene.onGeneAcquired += OnAcquireConflicting;
+        if (parentGene) parentGene.OnGeneAcquired += OnAcquireParent;
+        if (conflictingGene) conflictingGene.OnGeneAcquired += OnAcquireConflicting;
     }
 
     private void OnAcquireParent()
@@ -95,7 +95,7 @@ public class MushroomGene : Selectable, ITooltip, IPointerClickHandler
         cb.disabledColor = Color.green;
         this.colors = cb;
         this.interactable = false;
-        onGeneAcquired?.Invoke();
+        OnGeneAcquired?.Invoke();
     }
 
     private void ApplyChanges()
