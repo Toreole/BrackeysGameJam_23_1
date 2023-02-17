@@ -24,6 +24,8 @@ public class MushroomGene : Selectable, ITooltip, IPointerClickHandler
 
     [Header("Gene Changes")]
     [SerializeField]
+    private int bonusColonies;
+    [SerializeField]
     private string overrideSpeciesPrefix;
     [SerializeField]
     private string overrideSpeciesSuffix;

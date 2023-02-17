@@ -56,6 +56,7 @@ public class SpeciesSettings
 {
     public string namePrefix, nameSuffix, name;
     public int colonySize;
+    public int colonyCount;
     public float mushroomSpacing = 0.4f;
 
     public string FullName

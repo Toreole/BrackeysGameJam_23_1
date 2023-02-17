@@ -22,6 +22,13 @@ public class BetterButton : Selectable, ITooltip, IPointerClickHandler
             onClick?.Invoke();
     }
 
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        if (this.disabled)
+            Destroy(gameObject);
+    }
+
     public void DisableSelfAfterDelay(float delay)
     {
         disabled = true;

@@ -136,7 +136,7 @@ public class MushroomColony : MonoBehaviour, ITooltip, IInteractable
 
         mushrooms.Add(shroom);
         spawnDeltaTime = 0;
-        activeMushrooms++;
+        //activeMushrooms++;
     }
 
     private Vector2 GetRandomSpawnPoint()
@@ -171,6 +171,8 @@ public class MushroomColony : MonoBehaviour, ITooltip, IInteractable
     {
         activeMushrooms = 0;
         mushroomCount = mushroomInfo.SpeciesSettings.colonySize; //update colony size.
+        percentPerMushroom = 1f / mushroomCount;
+
         for (int i = 0; i < mushrooms.Count; i++)
         {
             mushrooms[i].Init(mushroomInfo, i + 1);
