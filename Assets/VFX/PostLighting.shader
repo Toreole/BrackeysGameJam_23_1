@@ -4,6 +4,7 @@ Shader "Hidden/PostLighting"
     {
         _MainTex ("Texture", 2D) = "white" {}
         _RenderTex("Texture", 2D) = "white" {}
+        _MinLight("Float", float) = 0.1 
     }
     SubShader
     {
@@ -40,6 +41,7 @@ Shader "Hidden/PostLighting"
 
             sampler2D _MainTex;
             sampler2D _RenderTex;
+            fixed _MinLight;
 
             fixed4 frag (v2f i) : SV_Target
             {
@@ -50,7 +52,7 @@ Shader "Hidden/PostLighting"
                 fixed lightContribution = lightPixel.a;
                 fixed3 lightColour = lightPixel.rgb;
 
-                col.rgb += lightColour * (lightContribution * 0.5f);
+                col.rgb *= lightColour * (max(_MinLight,lightContribution));
                 //col.rgb = lerp(col.rgb, lightColour, lightContribution * 0.5f);
                 return col;
             }
