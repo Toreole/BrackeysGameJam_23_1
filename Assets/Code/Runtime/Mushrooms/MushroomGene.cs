@@ -85,7 +85,7 @@ public class MushroomGene : Selectable, ITooltip, IPointerClickHandler
         if (conflictingGene) conflictingGene.OnGeneAcquired += OnAcquireConflicting;
     }
 
-    private void OnAcquireParent()
+    protected virtual void OnAcquireParent()
     {
         this.interactable = !conflictingGene?.Acquired ?? true;
     }
