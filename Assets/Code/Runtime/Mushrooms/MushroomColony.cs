@@ -43,7 +43,7 @@ public class MushroomColony : MonoBehaviour, ITooltip, IInteractable
     {
         get
         {
-            int growthTotal = (int)(GrowthPercent * 100f);
+            int growthTotal = (int)Mathf.RoundToInt(GrowthPercent * 100f);
             if (growthTotal == 100)
                 return $"A colony of {mushroomInfo.SpeciesSettings.FullName}.\nReady to harvest (click).";
             return $"A colony of {mushroomInfo.SpeciesSettings.FullName}.\n{growthTotal}% mature.";

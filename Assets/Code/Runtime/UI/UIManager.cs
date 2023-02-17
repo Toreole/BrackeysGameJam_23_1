@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using TMPro;
 
@@ -32,6 +30,23 @@ public class UIManager : MonoBehaviour
         mushroomInfo.OnBioMassPointsChanged += RefreshBiomassDisplays;
         RefreshBiomassDisplays(mushroomInfo.BioMassPoints);
         hud.SetActive(true);
+    }
+
+    private void Update()
+    {
+        if (!Input.GetKeyDown(KeyCode.Escape))
+            return;
+        if(anyMenuIsOpened)
+        {
+            if(genePanel.anchoredPosition == Vector2.zero && coroutine == null) 
+            {
+                HideGenePanel();
+            }
+        }
+        else
+        {
+
+        }
     }
 
     private void RefreshBiomassDisplays(int biomass)
