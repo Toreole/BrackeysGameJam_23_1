@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -53,7 +54,19 @@ public class MushroomGene : Selectable, ITooltip, IPointerClickHandler
     public bool Acquired { get; private set; } = false;
     public event Action OnGeneAcquired;
 
-    public string Tooltip => $"<u>{name}</u>\n{description}\nCost: {cost}";
+    public string Tooltip 
+    { 
+        get 
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"<u>{name}</u>");
+            sb.AppendLine(description);
+            if (parentGene) sb.AppendLine($"Requires: {parentGene.name}");
+            if (conflictingGene) sb.AppendLine($"Incompatible with: {conflictingGene.name}");
+            sb.AppendLine($"Cost: {cost}");
+            return sb.ToString();
+        } 
+    }
 
     protected override void OnEnable()
     {
