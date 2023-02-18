@@ -134,6 +134,7 @@ public class MushroomGene : Selectable, ITooltip, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (!interactable) return;
         AcquireGene();
     }
 

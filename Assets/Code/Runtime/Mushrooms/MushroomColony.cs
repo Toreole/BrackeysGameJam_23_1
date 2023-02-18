@@ -19,6 +19,8 @@ public class MushroomColony : MonoBehaviour, ITooltip, IInteractable
     [SerializeField]
     private BoxCollider2D boundsCollider;
 
+    private AudioSource harvestAudio;
+
     private float timeBetweenSpawns;
     private float spawnDeltaTime = 0;
     private Vector2 spawnRectExtents;
@@ -52,6 +54,7 @@ public class MushroomColony : MonoBehaviour, ITooltip, IInteractable
 
     private void Start()
     {
+        harvestAudio = GetComponent<AudioSource>();
         mushroomCount = mushroomInfo.SpeciesSettings.colonySize;
         spacing = mushroomInfo.SpeciesSettings.mushroomSpacing;
 
@@ -169,6 +172,7 @@ public class MushroomColony : MonoBehaviour, ITooltip, IInteractable
 
     private void Harvest()
     {
+        harvestAudio?.Play();
         activeMushrooms = 0;
         mushroomCount = mushroomInfo.SpeciesSettings.colonySize; //update colony size.
         percentPerMushroom = 1f / mushroomCount;
