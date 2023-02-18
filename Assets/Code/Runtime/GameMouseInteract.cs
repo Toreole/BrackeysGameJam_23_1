@@ -59,4 +59,14 @@ public class GameMouseInteract : MonoBehaviour
             interactable.Interact();
         }
     }
+
+    public void ExpandViewArea(int distance)
+    {
+        maxX += distance;
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
